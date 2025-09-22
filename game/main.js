@@ -1,6 +1,27 @@
-document.getElementById("txt").innerText = "これはゲームです";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+
+const player = {
+    x: canvas.width / 2 - 15,
+    y: canvas.height - 60,
+    width: 30,
+    height: 30,
+    color: "cyan",
+    life: 3,
+};
+
+const bullets = [];
+const BULLET_SPEED = -10;
+
+function tryShoot(){
+    bullets.push({
+        x: player.x + 12.5,
+        y: player.y,
+        width: 5,
+        height: 50,
+        vy: BULLET_SPEED,
+    })
+}
 
 
 // fillRECT(x座標(横), y座標(縦), 横幅, 縦幅)
@@ -8,37 +29,57 @@ const ctx = canvas.getContext("2d");
 //自分のキャラクターに見立てた四角形をとりあえず作ってみてください。
 
 // width="480" height="640"
-let x = 225;
-let tama = 0;
 
 window.addEventListener("keydown", (e) => {
     if (e.key === "ArrowLeft") {
-        x -= 10;
+        if (player.x > 10) {
+            player.x -= 10;
+        }
     } else if (e.key === "ArrowRight") {
-        x += 10;
-    } else if (e.key === "space") {
-        tama += 1;
+        if (player.x < canvas.width - player.width - 10) {
+            player.x += 10;
+        }
+    } else if (e.key === "ArrowUp") {
+        if (player.y > 10) {
+            player.y -= 10;
+        }
+    } else if (e.key === "ArrowDown") {
+        if (player.y < canvas.height - player.height - 10) {
+            player.y += 10;
+        }
+    } else if (e.code === "Space") {
+        tryShoot();
     }
 });
 
-let y1 = 0;
-let y2 = -100;
+function update(){
+    for (let i = 0; i < bullets.length; i++) {
+        const bullet = bullets[i];
+        bullet.y += bullet.vy;
 
-function gameLoop() {
+        if (bullet.y < 0) {
+            bullets.splice(i, 1);
+        }
+    }
+}
+
+function draw(){
     ctx.fillStyle = "black";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "cyan";
-    ctx.fillRect(x, 480, 30, 30);
-    ctx.fillStyle = "red";
-    ctx.fillRect(225, y1, 30, 30);
-    y1 += 1;
-    ctx.fillStyle = "red";
-    ctx.fillRect(300, y2, 30, 30);
-    y2 += 1;
-    if (tama > 0) {
-        ctx.fillStyle = "white";
-        ctx.fillRect(x + 10, 480, 10,10);
+
+    ctx.fillStyle = player.color;
+    ctx.fillRect(player.x, player.y, player.width, player.height);
+
+    ctx.fillStyle = "white";
+    for (let i = 0; i < bullets.length; i++) {
+        const bullet = bullets[i];
+        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
     }
+}
+
+function gameLoop() {
+    update();
+    draw();
     requestAnimationFrame(gameLoop);
 }
 

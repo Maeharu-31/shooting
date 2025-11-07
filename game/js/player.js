@@ -1,10 +1,14 @@
+const playerImage = new Image();
+playerImage.src = "";
+
 export const player = {
     x: 0,
     y: 0,
     width: 30,
     height: 30,
     color: "cyan",
-    life: 3,
+    life: 10,
+    score: 0,
 };
 
 export function initPlayer(canvas) {

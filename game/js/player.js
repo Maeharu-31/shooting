@@ -18,6 +18,8 @@ export function initPlayer(canvas) {
 }
 
 export function drawPlayer(ctx) {
-    ctx.fillStyle = player.color;
     ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
+
+    ctx.strokeStyle = "cyan";
+    ctx.strokeRect(player.x, player.y, player.width, player.height);
 }

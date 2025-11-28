@@ -1,12 +1,12 @@
 const playerImage = new Image();
-playerImage.src = "";
+playerImage.src = "https://www.irasapofree.com/wp-content/uploads/2020/05/e1d834b97602d4a6609c07011a036746-1024x910.png";
 
 export const player = {
     x: 0,
     y: 0,
-    width: 30,
-    height: 30,
-    color: "cyan",
+    width: 50,
+    height: 50,
+    color: "transparent",
     life: 10,
     score: 0,
 };
@@ -19,5 +19,5 @@ export function initPlayer(canvas) {
 
 export function drawPlayer(ctx) {
     ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+    ctx.drawImage(playerImage, player.x, player.y, player.width, player.height);
 }

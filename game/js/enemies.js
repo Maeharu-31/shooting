@@ -1,20 +1,20 @@
 export const enemies = [];
 const SIZE = 50;
 const enemyImage = new Image();
-enemyImage.src = "https://img.atwiki.jp/oks3/attach/156/683/IMG_6531.webp";
+enemyImage.src = "https://www.kurora-trivia.com/wp-content/uploads/2025/08/cc327778c431a4693cb2bf11f676382f.webp";
 
 function pushEnemies(canvas) {
     const w = SIZE;
     const h = SIZE;
     const x = Math.random() * (canvas.width - w);
     const y = 0;
-    const vy = 7;
+    const vy = 3;
 
     enemies.push({ x, y, width: w, height: h, vy });
 }
 
 export function spawnEnemy(canvas) {
-    if (enemies.length < 100) {
+    if (enemies.length < 10) {
         pushEnemies(canvas);
     }
 }

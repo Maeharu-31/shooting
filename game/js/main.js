@@ -1,6 +1,7 @@
 import { player, initPlayer, drawPlayer} from "./player.js";
 import { spawnEnemy, enemies, updateEnemies, drawEnemies } from "./enemies.js";
-import { handleCollisions } from "./collision.js";
+import { spawnEnemyBoss, enemiesBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
+import { handleCollisions, handleCollisionsBoss } from "./collision.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -65,14 +66,20 @@ function update(){
         }
     }
     spawnEnemy(canvas);
+    spawnEnemyBoss(canvas);
     updateEnemies(canvas);
+    updateEnemiesBoss(canvas);
     handleCollisions();
+    handleCollisionsBoss();
     updateScore();
 }
 
+const canvasImage = new Image();
+canvasImage.src = "https://kansai-wakuwaku.com/wp-content/uploads/2025/05/facility-img-main.jpg";
+
 function draw(){
     ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(canvasImage, 0, 0, canvas.width, canvas.height);
 
     drawPlayer(ctx);
 
@@ -83,6 +90,7 @@ function draw(){
     }
     
     drawEnemies(ctx);
+    drawEnemiesBoss(ctx);
 
 }
 

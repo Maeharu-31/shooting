@@ -8,9 +8,10 @@ function pushEnemies(canvas) {
     const h = SIZE;
     const x = Math.random() * (canvas.width - w);
     const y = 0;
-    const vy = 3;
+    const vy = 1;
+    const point = 1;
 
-    enemies.push({ x, y, width: w, height: h, vy });
+    enemies.push({ x, y, width: w, height: h, vy, point });
 }
 
 export function spawnEnemy(canvas) {
@@ -34,5 +35,8 @@ export function drawEnemies(ctx) {
     for (const e of enemies) {
         ctx.fillRect(e.x, e.y, e.width, e.height);
         ctx.drawImage(enemyImage, e.x, e.y, e.width, e.height);
+
+        ctx.strokeStyle = "red";
+        ctx.strokeRect(e.x, e.y, e.width, e.height);
     }
 }

@@ -18,7 +18,7 @@ export function handleCollisions() {
         // 命中：弾と敵を削除、スコア加算
         bullets.splice(bi, 1);
         enemies.splice(ei, 1);
-        player.score += 1;
+        player.score += e.point;
         console.log("Score:", player.score);
         hit = true;
         break; // この敵は消えたので次の敵へ
@@ -61,10 +61,13 @@ export function handleCollisionsBoss() {
       )) {
         // 命中：弾と敵を削除、スコア加算
         bullets.splice(ci, 1);
-        enemiesBoss.splice(fi, 1);
-        player.score += 5;
-        console.log("Score:", player.score);
-        hit = true;
+        f.life -= 1;
+        if (f.life <= 0) {
+          enemiesBoss.splice(fi, 1);
+          player.score += f.point;
+          console.log("Score:", player.score);
+          hit = true;
+        }
         break; // この敵は消えたので次の敵へ
       }
     }

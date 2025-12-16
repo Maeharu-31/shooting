@@ -7,8 +7,8 @@ function pushEnemies(canvas) {
     const w = SIZE;
     const h = SIZE;
     const x = Math.random() * (canvas.width - w);
-    const y = 0;
-    const vy = 1;
+    const y = 0 - h;
+    const vy = 4;
     const point = 1;
 
     enemies.push({ x, y, width: w, height: h, vy, point });

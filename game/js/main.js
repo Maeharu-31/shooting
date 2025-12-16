@@ -1,7 +1,8 @@
 import { player, initPlayer, drawPlayer} from "./player.js";
-import { spawnEnemy, enemies, updateEnemies, drawEnemies } from "./enemies.js";
-import { spawnEnemyBoss, enemiesBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
-import { handleCollisions, handleCollisionsBoss } from "./collision.js";
+import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
+import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
+import { handleCollisions } from "./collision.js";
+import { drawBackground } from "./background.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -14,7 +15,7 @@ const BULLET_SPEED = -5;
 function tryShoot(){
     bullets.push({
         x: player.x + player.width / 2 - 5,
-        y: player.y,
+        y: player.y - 10,
         width: 10,
         height: 10,
         vy: BULLET_SPEED,
@@ -70,16 +71,17 @@ function update(){
     updateEnemies(canvas);
     updateEnemiesBoss(canvas);
     handleCollisions();
-    handleCollisionsBoss();
     updateScore();
 }
 
-const canvasImage = new Image();
-canvasImage.src = "https://kansai-wakuwaku.com/wp-content/uploads/2025/05/facility-img-main.jpg";
+// const canvasImage = new Image();
+// canvasImage.src = "https://kansai-wakuwaku.com/wp-content/uploads/2025/05/facility-img-main.jpg";
 
 function draw(){
-    ctx.fillStyle = "black";
-    ctx.drawImage(canvasImage, 0, 0, canvas.width, canvas.height);
+    // ctx.fillStyle = "black";
+    // ctx.drawImage(canvasImage, 0, 0, canvas.width, canvas.height);
+
+    drawBackground(ctx, canvas);
 
     drawPlayer(ctx);
 

@@ -7,7 +7,7 @@ function pushEnemiesBoss(canvas) {
     const w = SIZE;
     const h = SIZE;
     const x = Math.random() * (canvas.width - w);
-    const y = 0;
+    const y = 0 - h;
     const vy = 1;
     const life = 100;
     const point = 1000;

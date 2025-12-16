@@ -28,26 +28,6 @@ export function handleCollisions() {
     if (hit) continue;
   }
 
-  // 自機 × 敵（ゲームオーバー）
-  for (let ei = enemies.length - 1; ei >= 0; ei--) {
-    const e = enemies[ei];
-    if (rectsIntersect(
-      { x: player.x, y: player.y, width: player.width, height: player.height },
-      { x: e.x, y: e.y, width: e.width, height: e.height }
-    )) {
-      player.life -= 1;
-      if (player.life <= 0) {
-        document.location.reload();
-      }
-      enemies.splice(ei, 1);
-      console.log("Player Life:", player.life);
-      // isGameOver = true;
-      break;
-    }
-  }
-}
-
-export function handleCollisionsBoss() {
   // 弾 × 敵Boss
   for (let fi = enemiesBoss.length - 1; fi >= 0; fi--) {
     const f = enemiesBoss[fi];
@@ -73,6 +53,24 @@ export function handleCollisionsBoss() {
     }
 
     if (hit) continue;
+  }
+
+  // 自機 × 敵（ゲームオーバー）
+  for (let ei = enemies.length - 1; ei >= 0; ei--) {
+    const e = enemies[ei];
+    if (rectsIntersect(
+      { x: player.x, y: player.y, width: player.width, height: player.height },
+      { x: e.x, y: e.y, width: e.width, height: e.height }
+    )) {
+      player.life -= 1;
+      if (player.life <= 0) {
+        document.location.reload();
+      }
+      enemies.splice(ei, 1);
+      console.log("Player Life:", player.life);
+      // isGameOver = true;
+      break;
+    }
   }
 
   // 自機 × 敵（ゲームオーバー）Boss

@@ -5,7 +5,11 @@ import { handleCollisions } from "./collision.js";
 import { drawBackground } from "./background.js";
 
 const canvas = document.getElementById("gameCanvas");
+const Ecanvas = document.getElementById("enemiesCanvas");
+const Pcanvas = document.getElementById("playerCanvas");
 const ctx = canvas.getContext("2d");
+const Ectx = Ecanvas.getContext("2d");
+const Pctx = Pcanvas.getContext("2d");
 
 initPlayer(canvas);
 
@@ -74,14 +78,8 @@ function update(){
     updateScore();
 }
 
-// const canvasImage = new Image();
-// canvasImage.src = "https://kansai-wakuwaku.com/wp-content/uploads/2025/05/facility-img-main.jpg";
-
 function draw(){
-    // ctx.fillStyle = "black";
-    // ctx.drawImage(canvasImage, 0, 0, canvas.width, canvas.height);
-
-    drawBackground(ctx, canvas);
+    drawBackground(ctx, Ectx, Pctx, canvas, Ecanvas, Pcanvas);
 
     drawPlayer(ctx);
 

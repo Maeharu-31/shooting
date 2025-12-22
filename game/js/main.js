@@ -5,11 +5,7 @@ import { handleCollisions } from "./collision.js";
 import { drawBackground } from "./background.js";
 
 const canvas = document.getElementById("gameCanvas");
-const Ecanvas = document.getElementById("enemiesCanvas");
-const Pcanvas = document.getElementById("playerCanvas");
 const ctx = canvas.getContext("2d");
-const Ectx = Ecanvas.getContext("2d");
-const Pctx = Pcanvas.getContext("2d");
 
 initPlayer(canvas);
 
@@ -79,7 +75,7 @@ function update(){
 }
 
 function draw(){
-    drawBackground(ctx, Ectx, Pctx, canvas, Ecanvas, Pcanvas);
+    drawBackground(ctx, canvas);
 
     drawPlayer(ctx);
 

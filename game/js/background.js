@@ -1,9 +1,6 @@
 const canvasImage = new Image();
 canvasImage.src = "https://img.freepik.com/premium-photo/sky-with-abstract-star-clusters_1085611-20182.jpg?semt=ais_hybrid&w=740&q=80";
 
-const EPcanvasImage = new Image();
-EPcanvasImage.src = "";
-
 const background1 = {
     x: 0,
     y: 0,
@@ -15,7 +12,7 @@ const background2 = {
     y: 0
 }
 
-export function drawBackground(ctx, Ectx, Pctx, canvas, Ecanvas, Pcanvas) {
+export function drawBackground(ctx, canvas) {
     background1.y += background1.vy;
     background2.y = background1.y - canvas.height;
     if (background1.y >= canvas.height) {
@@ -27,10 +24,4 @@ export function drawBackground(ctx, Ectx, Pctx, canvas, Ecanvas, Pcanvas) {
     ctx.fillStyle = "black";
     ctx.drawImage(canvasImage, background1.x, background1.y, canvas.width, canvas.height);
     ctx.drawImage(canvasImage, background2.x, background2.y, canvas.width, canvas.height);
-
-    Ectx.fillStyle = "black";
-    Ectx.drawImage(EPcanvasImage, 0, 0, Ecanvas.width, Ecanvas.height);
-
-    Pctx.fillStyle = "black";
-    Pctx.drawImage(EPcanvasImage, 0, 0, Pcanvas.width, Pcanvas.height);
 }

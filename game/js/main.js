@@ -3,12 +3,10 @@ import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
 import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
 import { handleCollisions } from "./collision.js";
 import { drawBackground } from "./background.js";
-//import { stratdisplay } from "./display.js";
+import { gameStart } from "./display.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
-//stratdisplay(ctx);
 
 initPlayer(canvas);
 
@@ -21,6 +19,21 @@ function tryShoot(){
         y: player.y - 10,
         width: 10,
         height: 10,
+        vx: 0,
+        vy: BULLET_SPEED,
+    },{
+        x: player.x + player.width / 2 - 5,
+        y: player.y - 10,
+        width: 10,
+        height: 10,
+        vx: 1,
+        vy: BULLET_SPEED,
+    },{
+        x: player.x + player.width / 2 - 5,
+        y: player.y - 10,
+        width: 10,
+        height: 10,
+        vx: -1,
         vy: BULLET_SPEED,
     })
 }
@@ -56,6 +69,8 @@ window.addEventListener("keydown", (e) => {
             player.y += 10;
         }
     } else if (e.code === "Space") {
+        if (gameStart === "start") {
+        }
         tryShoot();
     }
 });
@@ -64,6 +79,7 @@ function update(){
     for (let i = 0; i < bullets.length; i++) {
         const bullet = bullets[i];
         bullet.y += bullet.vy;
+        bullet.x += bullet.vx;
 
         if (bullet.y < 0) {
             bullets.splice(i, 1);

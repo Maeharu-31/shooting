@@ -3,10 +3,12 @@ import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
 import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
 import { handleCollisions } from "./collision.js";
 import { drawBackground } from "./background.js";
-//import { gameStart } from "./display.js";
+import { gameState, gameStart, StartScreen } from "./display.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+
+
 
 initPlayer(canvas);
 
@@ -69,11 +71,17 @@ window.addEventListener("keydown", (e) => {
             player.y += 10;
         }
     } else if (e.code === "Space") {
-        if (gameStart === "start") {
+        if ((gameState == "start" && player.score == 0) || (gameState == "Level1" && player.score >= 5000)) {
+            
+        } else {
+            tryShoot();
         }
-        tryShoot();
     }
 });
+
+gameStart();
+
+StartScreen(canvas, ctx);
 
 function update(){
     for (let i = 0; i < bullets.length; i++) {

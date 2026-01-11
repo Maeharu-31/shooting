@@ -8,8 +8,6 @@ import { gameState, gameStart, StartScreen } from "./display.js";
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-
-
 initPlayer(canvas);
 
 export const bullets = [];

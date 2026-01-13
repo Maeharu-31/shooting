@@ -6,7 +6,6 @@ export const player = {
     y: 0,
     width: 50,
     height: 50,
-    color: "transparent",
     life: 10,
     score: 0,
 };

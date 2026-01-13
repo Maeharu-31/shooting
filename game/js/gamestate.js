@@ -1,11 +1,18 @@
-export const gameState = "start";
+export let gameState = "start";
 
-export function gameStart(space) {
-    if (gameState == "start" && space == true) {
-        gameScreen();
+export function gameStart(ctx, canvas, space) {
+    if (gameState == "start") {
+        gameScreen(ctx, canvas);
+        if (space == true) {
+            gameState = "playing";
+            console.log("gameState:", gameState);
+        }
     }
 }
 
-export function gameScreen(ctx, canvas) {
-    ctx.fillStyle = "black";
+function gameScreen(ctx, canvas) {
+    ctx.font = "100px fantasy";
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.fillText("GAME START!", canvas.width / 2, canvas.height / 2);
 }

@@ -24,7 +24,6 @@ export function updateMapImage(canvas) {
 }
 
 export function drawMapImage(ctx,canvas) {
-    ctx.fillStyle = "black";
     ctx.drawImage(canvasImage, mapimage1.x, mapimage1.y, canvas.width, canvas.height);
     ctx.drawImage(canvasImage, mapimage2.x, mapimage2.y, canvas.width, canvas.height);
 }

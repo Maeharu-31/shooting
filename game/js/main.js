@@ -3,10 +3,12 @@ import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
 import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
 import { handleCollisions } from "./collision.js";
 import { updateMapImage, drawMapImage } from "./mapimage.js";
-import { gameStart } from "./gamestate.js";
+import { gameState, gameStart } from "./gamestate.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+
+console.log("gameState:", gameState);
 
 initPlayer(canvas);
 
@@ -52,35 +54,35 @@ function updateScore() {
 // width="480" height="640"
 
 window.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowLeft") {
-        if (player.x > 10) {
-            player.x -= 10;
+    if ((gameState == "start" && player.score == 0) != true) {
+        if (e.key === "ArrowLeft") {
+            if (player.x > 10) {
+                player.x -= 10;
+            }
+        } else if (e.key === "ArrowRight") {
+            if (player.x < canvas.width - player.width - 10) {
+                player.x += 10;
+            }
+        } else if (e.key === "ArrowUp") {
+            if (player.y > 10) {
+                player.y -= 10;
+            }
+        } else if (e.key === "ArrowDown") {
+            if (player.y < canvas.height - player.height - 10) {
+                player.y += 10;
+            }
         }
-    } else if (e.key === "ArrowRight") {
-        if (player.x < canvas.width - player.width - 10) {
-            player.x += 10;
-        }
-    } else if (e.key === "ArrowUp") {
-        if (player.y > 10) {
-            player.y -= 10;
-        }
-    } else if (e.key === "ArrowDown") {
-        if (player.y < canvas.height - player.height - 10) {
-            player.y += 10;
-        }
-    } else if (e.code === "Space") {
+    }
+    if (e.code === "Space") {
         if ((gameState == "start" && player.score == 0) != true) {
             tryShoot();
-        } else {
+        }
+        if ((gameState == "start" && player.score == 0) == true) {
             const space = true;
-            gameStart(space);
+            gameStart(ctx, canvas, space);
         }
     }
 });
-
-gameStart();
-
-StartScreen(canvas, ctx);
 
 function update(){
     if ((gameState == "start" && player.score == 0) != true) {
@@ -113,7 +115,6 @@ function draw(){
             const bullet = bullets[i];
             ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
         }
-        
         drawEnemies(ctx);
         drawEnemiesBoss(ctx);
     }

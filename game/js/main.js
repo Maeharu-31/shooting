@@ -2,8 +2,8 @@ import { player, initPlayer, drawPlayer} from "./player.js";
 import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
 import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
 import { handleCollisions } from "./collision.js";
-import { drawBackground } from "./background.js";
-import { gameState, gameStart, StartScreen } from "./display.js";
+import { updateMapImage, drawMapImage } from "./mapimage.js";
+import { gameStart } from "./gamestate.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
@@ -69,10 +69,11 @@ window.addEventListener("keydown", (e) => {
             player.y += 10;
         }
     } else if (e.code === "Space") {
-        if ((gameState == "start" && player.score == 0) || (gameState == "Level1" && player.score >= 5000)) {
-            
-        } else {
+        if ((gameState == "start" && player.score == 0) != true) {
             tryShoot();
+        } else {
+            const space = true;
+            gameStart(space);
         }
     }
 });
@@ -82,37 +83,40 @@ gameStart();
 StartScreen(canvas, ctx);
 
 function update(){
-    for (let i = 0; i < bullets.length; i++) {
-        const bullet = bullets[i];
-        bullet.y += bullet.vy;
-        bullet.x += bullet.vx;
-
-        if (bullet.y < 0) {
-            bullets.splice(i, 1);
+    if ((gameState == "start" && player.score == 0) != true) {
+        for (let i = 0; i < bullets.length; i++) {
+            const bullet = bullets[i];
+            bullet.y += bullet.vy;
+            bullet.x += bullet.vx;
+            
+            if (bullet.y < 0) {
+                bullets.splice(i, 1);
+            }
         }
+        updateMapImage(canvas);
+        spawnEnemy(canvas);
+        spawnEnemyBoss(canvas);
+        updateEnemies(canvas);
+        updateEnemiesBoss(canvas);
+        handleCollisions();
+        updateScore();
     }
-    spawnEnemy(canvas);
-    spawnEnemyBoss(canvas);
-    updateEnemies(canvas);
-    updateEnemiesBoss(canvas);
-    handleCollisions();
-    updateScore();
 }
 
 function draw(){
-    drawBackground(ctx, canvas);
-
+    drawMapImage(ctx, canvas);
     drawPlayer(ctx);
 
-    ctx.fillStyle = "white";
-    for (let i = 0; i < bullets.length; i++) {
-        const bullet = bullets[i];
-        ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+    if ((gameState == "start" && player.score == 0) != true) {
+        ctx.fillStyle = "white";
+        for (let i = 0; i < bullets.length; i++) {
+            const bullet = bullets[i];
+            ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+        }
+        
+        drawEnemies(ctx);
+        drawEnemiesBoss(ctx);
     }
-    
-    drawEnemies(ctx);
-    drawEnemiesBoss(ctx);
-
 }
 
 function gameLoop() {

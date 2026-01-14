@@ -3,7 +3,7 @@ import { enemies } from "./enemies.js";
 import { enemiesBoss } from "./enemiesBoss.js";
 import { bullets } from "./main.js";
 
-export function handleCollisions() {
+export function handleCollisions(gamestate) {
   // 弾 × 敵
   for (let ei = enemies.length - 1; ei >= 0; ei--) {
     const e = enemies[ei];

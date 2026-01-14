@@ -3,12 +3,10 @@ import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
 import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
 import { handleCollisions } from "./collision.js";
 import { updateMapImage, drawMapImage } from "./mapimage.js";
-import { gameState, gameStart } from "./gamestate.js";
+import { gamestate, gameState } from "./gamestate.js";
 
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
-
-console.log("gameState:", gameState);
 
 initPlayer(canvas);
 
@@ -53,8 +51,10 @@ function updateScore() {
 
 // width="480" height="640"
 
+export let space = false;
+
 window.addEventListener("keydown", (e) => {
-    if ((gameState == "start" && player.score == 0) != true) {
+    if ((gamestate == "start" && player.score == 0) != true) {
         if (e.key === "ArrowLeft") {
             if (player.x > 10) {
                 player.x -= 10;
@@ -74,17 +74,16 @@ window.addEventListener("keydown", (e) => {
         }
     }
     if (e.code === "Space") {
-        if ((gameState == "start" && player.score == 0) != true) {
+        if ((gamestate == "start" && player.score == 0) != true) {
             tryShoot();
         } else {
-            const space = true;
-            gameStart(ctx, canvas, space);
+            space = true;
         }
     }
 });
 
 function update(){
-    if ((gameState == "start" && player.score == 0) != true) {
+    if ((gamestate == "start" && player.score == 0) != true) {
         for (let i = 0; i < bullets.length; i++) {
             const bullet = bullets[i];
             bullet.y += bullet.vy;
@@ -99,16 +98,17 @@ function update(){
         spawnEnemyBoss(canvas);
         updateEnemies(canvas);
         updateEnemiesBoss(canvas);
-        handleCollisions();
+        handleCollisions(gamestate);
         updateScore();
     }
 }
 
 function draw(){
     drawMapImage(ctx, canvas);
+    gameState(ctx, canvas);
     drawPlayer(ctx);
 
-    if ((gameState == "start" && player.score == 0) != true) {
+    if ((gamestate == "start" && player.score == 0) != true) {
         ctx.fillStyle = "white";
         for (let i = 0; i < bullets.length; i++) {
             const bullet = bullets[i];

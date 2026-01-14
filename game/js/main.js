@@ -54,7 +54,7 @@ function updateScore() {
 export let space = false;
 
 window.addEventListener("keydown", (e) => {
-    if ((gamestate == "start" && player.score == 0) != true) {
+    if ((gamestate == "start" && player.score == 0) == false) {
         if (e.key === "ArrowLeft") {
             if (player.x > 10) {
                 player.x -= 10;
@@ -74,9 +74,13 @@ window.addEventListener("keydown", (e) => {
         }
     }
     if (e.code === "Space") {
-        if ((gamestate == "start" && player.score == 0) != true) {
-            tryShoot();
-            space = false;
+        if ((gamestate == "start" && player.score == 0) == false) {
+            if ((gamestate == "over") == false) {
+                tryShoot();
+                space = true;
+            } else {
+                space = true;
+            }
         } else {
             space = true;
         }
@@ -84,23 +88,25 @@ window.addEventListener("keydown", (e) => {
 });
 
 function update(){
-    if ((gamestate == "start" && player.score == 0) != true) {
-        for (let i = 0; i < bullets.length; i++) {
-            const bullet = bullets[i];
-            bullet.y += bullet.vy;
-            bullet.x += bullet.vx;
-            
-            if (bullet.y < 0) {
-                bullets.splice(i, 1);
+    if ((gamestate == "start" && player.score == 0) == false) {
+        if ((gamestate == "over") == false) {
+            for (let i = 0; i < bullets.length; i++) {
+                const bullet = bullets[i];
+                bullet.y += bullet.vy;
+                bullet.x += bullet.vx;
+                
+                if (bullet.y < 0) {
+                    bullets.splice(i, 1);
+                }
             }
+            updateMapImage(canvas);
+            spawnEnemy(canvas);
+            spawnEnemyBoss(canvas);
+            updateEnemies(canvas);
+            updateEnemiesBoss(canvas);
+            handleCollisions();
+            updateScore();
         }
-        updateMapImage(canvas);
-        spawnEnemy(canvas);
-        spawnEnemyBoss(canvas);
-        updateEnemies(canvas);
-        updateEnemiesBoss(canvas);
-        handleCollisions();
-        updateScore();
     }
 }
 
@@ -109,14 +115,16 @@ function draw(){
     gameState(ctx, canvas);
     drawPlayer(ctx);
 
-    if ((gamestate == "start" && player.score == 0) != true) {
-        ctx.fillStyle = "white";
-        for (let i = 0; i < bullets.length; i++) {
-            const bullet = bullets[i];
-            ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+    if ((gamestate == "start" && player.score == 0) == false) {
+        if ((gamestate == "over") == false) {
+            ctx.fillStyle = "white";
+            for (let i = 0; i < bullets.length; i++) {
+                const bullet = bullets[i];
+                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+            }
+            drawEnemies(ctx);
+            drawEnemiesBoss(ctx);
         }
-        drawEnemies(ctx);
-        drawEnemiesBoss(ctx);
     }
 }
 

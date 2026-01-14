@@ -1,5 +1,4 @@
 import { space } from "./main.js";
-import { player } from "./player.js";
 
 export let gamestate = "start";
 console.log("GAMESTATE:", gamestate);

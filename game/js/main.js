@@ -98,7 +98,7 @@ function update(){
         spawnEnemyBoss(canvas);
         updateEnemies(canvas);
         updateEnemiesBoss(canvas);
-        handleCollisions(gamestate);
+        handleCollisions();
         updateScore();
     }
 }

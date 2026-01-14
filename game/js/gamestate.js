@@ -4,24 +4,36 @@ import { player } from "./player.js";
 export let gamestate = "start";
 console.log("GAMESTATE:", gamestate);
 
-export function gameState(ctx, canvas) {
+export function gameState() {
     switch (gamestate) {
         case "start":
-            if (player.score == 0) {
-                gameScreen(ctx, canvas);
-                if (space == true) {
-                    gamestate = "playing1";
-                    console.log("GAMESTATE:", gamestate);
-                }
+            if ((player.score == 0) != true);
+            break;
+        case "over":
+            if ((player.life <= 0) != true);
+            break;
+    }
+}
+
+export function gameScreen(ctx, canvas) {
+    switch (gamestate) {
+        case "start":
+            ctx.filStyle = "yellow";
+            ctx.font = "50px fantasy";
+            ctx.textAlign = "center";
+            ctx.fillText("GAME START!", canvas.width / 2, canvas.height / 2);
+            if (space == true) {
+                gamestate = "play";
+                console.log("GAMESTATE:", gamestate);
+            }
+            break;
+        case "over":
+            ctx.fillStyle = "red";
+            ctx.font = "50px fantasy";
+            ctx.textAlign = "center";
+            ctx.fillText("GAME OVER!", canvas.width / 2, canvas.height / 2);
+            if (space == true) {
             }
             break;
     }
-    
-}
-
-function gameScreen(ctx, canvas) {
-    ctx.fillStyle = "black";
-    ctx.font = "50px fantasy";
-    ctx.textAlign = "center";
-    ctx.fillText("GAME START!", canvas.width / 2, canvas.height / 2);
 }

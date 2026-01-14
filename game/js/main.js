@@ -76,8 +76,7 @@ window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
         if ((gameState == "start" && player.score == 0) != true) {
             tryShoot();
-        }
-        if ((gameState == "start" && player.score == 0) == true) {
+        } else {
             const space = true;
             gameStart(ctx, canvas, space);
         }

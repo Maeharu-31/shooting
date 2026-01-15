@@ -54,7 +54,7 @@ function updateScore() {
 export let space = false;
 
 window.addEventListener("keydown", (e) => {
-    if ((gamestate == "start" && player.score == 0) == false) {
+    if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
         if (e.key === "ArrowLeft") {
             if (player.x > 10) {
                 player.x -= 10;
@@ -74,7 +74,7 @@ window.addEventListener("keydown", (e) => {
         }
     }
     if (e.code === "Space") {
-        if ((gamestate == "start" && player.score == 0) == false) {
+        if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
             if ((gamestate == "over") == false) {
                 tryShoot();
                 space = false;
@@ -88,8 +88,8 @@ window.addEventListener("keydown", (e) => {
 });
 
 function update(){
-    if ((gamestate == "start" && player.score == 0) == false) {
-        handleCollisions(gamestate, space);
+    if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
+        handleCollisions();
         updateScore();
         if ((gamestate == "over") == false) {
             for (let i = 0; i < bullets.length; i++) {
@@ -112,10 +112,9 @@ function update(){
 
 function draw(){
     drawMapImage(ctx, canvas);
-    gameState(ctx, canvas);
     drawPlayer(ctx);
 
-    if ((gamestate == "start" && player.score == 0) == false) {
+    if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
         drawEnemies(ctx);
         drawEnemiesBoss(ctx);
         if ((gamestate == "over") == false) {
@@ -126,6 +125,7 @@ function draw(){
             }
         }
     }
+    gameState(ctx, canvas);
 }
 
 function gameLoop() {

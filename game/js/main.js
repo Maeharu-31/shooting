@@ -77,7 +77,7 @@ window.addEventListener("keydown", (e) => {
         if ((gamestate == "start" && player.score == 0) == false) {
             if ((gamestate == "over") == false) {
                 tryShoot();
-                space = true;
+                space = false;
             } else {
                 space = true;
             }
@@ -89,6 +89,8 @@ window.addEventListener("keydown", (e) => {
 
 function update(){
     if ((gamestate == "start" && player.score == 0) == false) {
+        handleCollisions(gamestate, space);
+        updateScore();
         if ((gamestate == "over") == false) {
             for (let i = 0; i < bullets.length; i++) {
                 const bullet = bullets[i];
@@ -104,8 +106,6 @@ function update(){
             spawnEnemyBoss(canvas);
             updateEnemies(canvas);
             updateEnemiesBoss(canvas);
-            handleCollisions();
-            updateScore();
         }
     }
 }
@@ -116,14 +116,14 @@ function draw(){
     drawPlayer(ctx);
 
     if ((gamestate == "start" && player.score == 0) == false) {
+        drawEnemies(ctx);
+        drawEnemiesBoss(ctx);
         if ((gamestate == "over") == false) {
             ctx.fillStyle = "white";
             for (let i = 0; i < bullets.length; i++) {
                 const bullet = bullets[i];
                 ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
             }
-            drawEnemies(ctx);
-            drawEnemiesBoss(ctx);
         }
     }
 }

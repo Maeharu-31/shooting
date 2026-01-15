@@ -1,4 +1,5 @@
 import { space } from "./main.js";
+import { player } from "./player.js";
 
 export let gamestate = "start";
 console.log("GAMESTATE:", gamestate);
@@ -14,9 +15,6 @@ export function gameState(ctx, canvas) {
             break;
         case "over":
             gameScreen(ctx, canvas);
-            if (space == true) {
-            //    document.location.reload();
-            }
             break;
     }
 }
@@ -35,5 +33,14 @@ function gameScreen(ctx, canvas) {
             ctx.textAlign = "center";
             ctx.fillText("GAME OVER!", canvas.width / 2, canvas.height / 2);
             break;
+    }
+}
+
+export function reloadgameState() {
+    player.life = 0;
+    gamestate = "over";
+    console.log("GAMESTATE:", gamestate);
+    if (space == true) {
+        document.location.reload();
     }
 }

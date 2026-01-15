@@ -2,7 +2,7 @@ import { player } from "./player.js";
 import { enemies } from "./enemies.js";
 import { enemiesBoss } from "./enemiesBoss.js";
 import { bullets } from "./main.js";
-import { gamestate } from "./gamestate.js";
+import { reloadgameState } from "./gamestate.js";
 
 export function handleCollisions() {
   // 弾 × 敵
@@ -64,13 +64,11 @@ export function handleCollisions() {
       { x: e.x, y: e.y, width: e.width, height: e.height }
     )) {
       player.life -= 1;
+      console.log("Player Life:", player.life);
       if (player.life <= 0) {
-      //  document.location.reload();
-      gamestate = "over";
-      console.log("GAMESTATE:", gamestate);
+        reloadgameState();
       }
       enemies.splice(ei, 1);
-      console.log("Player Life:", player.life);
       // isGameOver = true;
       break;
     }
@@ -84,13 +82,11 @@ export function handleCollisions() {
       { x: f.x, y: f.y, width: f.width, height: f.height }
     )) {
       player.life -= 1;
+      console.log("Player Life:", player.life);
       if (player.life <= 0) {
-      //  document.location.reload();
-      gamestate = "over";
-      console.log("GAMESATE:", gamestate);
+        reloadgameState();
       }
       enemiesBoss.splice(fi, 1);
-      console.log("Player Life:", player.life);
       // isGameOver = true;
       break;
     }

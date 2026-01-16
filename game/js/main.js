@@ -1,4 +1,4 @@
-import { player, initPlayer, drawPlayer} from "./player.js";
+import { player, initPlayer, drawPlayer, checkPlayer} from "./player.js";
 import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
 import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
 import { handleCollisions } from "./collision.js";
@@ -51,33 +51,26 @@ function updateScore() {
 
 // width="480" height="640"
 
+export const key = {
+    left: false,
+    right: false,
+    up: false,
+    down: false,
+};
+
 export let space = false;
 
 window.addEventListener("keydown", (e) => {
     if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
-        if (e.key === "ArrowLeft") {
-            if (player.x > 10) {
-                player.x -= 10;
-            }
-        } else if (e.key === "ArrowRight") {
-            if (player.x < canvas.width - player.width - 10) {
-                player.x += 10;
-            }
-        } else if (e.key === "ArrowUp") {
-            if (player.y > 10) {
-                player.y -= 10;
-            }
-        } else if (e.key === "ArrowDown") {
-            if (player.y < canvas.height - player.height - 10) {
-                player.y += 10;
-            }
-        }
+        if (e.key === "ArrowLeft") key.left = true;
+        else if (e.key === "ArrowRight") key.right = true;
+        else if (e.key === "ArrowUp") key.up = true;
+        else if (e.key === "ArrowDown") key.down = true;
     }
     if (e.code === "Space") {
         if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
             if ((gamestate == "over") == false) {
                 tryShoot();
-                space = false;
             } else {
                 space = true;
             }
@@ -85,6 +78,14 @@ window.addEventListener("keydown", (e) => {
             space = true;
         }
     }
+});
+
+window.addEventListener("keyup", (e) => {
+    if (e.key === "ArrowLeft") key.left = false;
+    else if (e.key === "ArrowRight") key.right = false;
+    else if (e.key === "ArrowUp") key.up = false;
+    else if (e.key === "ArrowDown") key.down = false;
+    else if (e.code === "Space") key.space = false;
 });
 
 function update(){
@@ -101,6 +102,7 @@ function update(){
                     bullets.splice(i, 1);
                 }
             }
+            checkPlayer(canvas);
             updateMapImage(canvas);
             spawnEnemy(canvas);
             spawnEnemyBoss(canvas);

@@ -1,7 +1,7 @@
 import { player } from "./player.js";
 import { enemies } from "./enemies.js";
 import { enemiesBoss } from "./enemiesBoss.js";
-import { bullets } from "./main.js";
+import { bullets, key } from "./main.js";
 import { reloadgameState } from "./gamestate.js";
 
 export function handleCollisions() {
@@ -67,6 +67,11 @@ export function handleCollisions() {
       console.log("Player Life:", player.life);
       if (player.life <= 0) {
         reloadgameState();
+        if (key.space == true) {
+          if (player.life <= 0) {
+            document.location.reload();
+          }
+        }
       }
       enemies.splice(ei, 1);
       // isGameOver = true;

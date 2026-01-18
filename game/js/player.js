@@ -19,7 +19,7 @@ export function initPlayer(canvas) {
     console.log("Player:", player);
 }
 
-export function checkPlayer(canvas) {
+export function checkPlayerkey(canvas) {
     if (key.left) {
         if (player.x > 0) player.x -= player.speed;
     } else if (key.right) {

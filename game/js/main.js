@@ -1,4 +1,4 @@
-import { player, initPlayer, drawPlayer, checkPlayer} from "./player.js";
+import { player, initPlayer, drawPlayer, checkPlayerkey } from "./player.js";
 import { spawnEnemy, updateEnemies, drawEnemies } from "./enemies.js";
 import { spawnEnemyBoss, updateEnemiesBoss, drawEnemiesBoss } from "./enemiesBoss.js";
 import { handleCollisions } from "./collision.js";
@@ -61,21 +61,19 @@ export const key = {
 export let space = false;
 
 window.addEventListener("keydown", (e) => {
-    if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
-        if (e.key === "ArrowLeft") key.left = true;
-        else if (e.key === "ArrowRight") key.right = true;
-        else if (e.key === "ArrowUp") key.up = true;
-        else if (e.key === "ArrowDown") key.down = true;
-    }
-    if (e.code === "Space") {
+    if (e.key === "ArrowLeft") key.left = true;
+    else if (e.key === "ArrowRight") key.right = true;
+    else if (e.key === "ArrowUp") key.up = true;
+    else if (e.key === "ArrowDown") key.down = true;
+    else if (e.code === "Space") {
         if (((gamestate == "start" || gamestate == "play1") && player.score == 0) == false) {
             if ((gamestate == "over") == false) {
                 tryShoot();
             } else {
-                space = true;
+                key.space = true;
             }
         } else {
-            space = true;
+            key.space = true;
         }
     }
 });
@@ -102,7 +100,7 @@ function update(){
                     bullets.splice(i, 1);
                 }
             }
-            checkPlayer(canvas);
+            checkPlayerkey(canvas);
             updateMapImage(canvas);
             spawnEnemy(canvas);
             spawnEnemyBoss(canvas);

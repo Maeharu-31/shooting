@@ -1,4 +1,4 @@
-import { space } from "./main.js";
+import { key } from "./main.js";
 import { player } from "./player.js";
 
 export let gamestate = "start";
@@ -8,17 +8,17 @@ export function gameState(ctx, canvas) {
     switch (gamestate) {
         case "start":
             gameScreen(ctx, canvas);
-            if (space == true) {
+            if (key.space == true) {
                 gamestate = "play1";
                 gameScreen(ctx, canvas);
-                if (space == true) {
+                if (key.space == true) {
                     console.log("GAMESTATE:", gamestate);
                 }
             }
             break;
         case "play1":
             gameScreen(ctx, canvas);
-            if (space == true) {
+            if (key.space == true) {
                 gamestate = "play2";
                 console.log("GAMESTATE:", gamestate);
             }
@@ -62,7 +62,4 @@ export function reloadgameState() {
     player.life = 0;
     gamestate = "over";
     console.log("GAMESTATE:", gamestate);
-    if (space == true) {
-        document.location.reload();
-    }
 }
